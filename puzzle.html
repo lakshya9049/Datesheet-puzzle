@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Cipher Trail</title>
+  <style>
+    body {
+      font-family: 'Courier New', monospace;
+      background: #111;
+      color: #0f0;
+      padding: 20px;
+    }
+    #output {
+      margin-top: 20px;
+      white-space: pre-wrap;
+    }
+    input, button {
+      margin-top: 10px;
+      background: #222;
+      color: #0f0;
+      border: 1px solid #0f0;
+      padding: 5px;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h2>🧠 Welcome to The Cipher Trail</h2>
+<p>Clue 1: "I hold the key to all secrets, <br>
+In Caesar's land where letters shift.<br>
+Go thirteen steps in mirrored fashion—<br>
+Find me in a classic gift."</p>
+
+<input id="rot13Input" placeholder="Enter ROT13 here..." />
+<button onclick="checkROT13()">Submit ROT13</button>
+<div id="rot13Output" class="hidden">
+  <p>Good job! Here's your next clue:</p>
+  <pre>
+Encrypted Message:
+U2FsdGVkX1+6+u7R2XjscKZb2bdFsh+RxE2CYoOJ0CU=
+
+Hint: Use a password to decrypt this using a dev's ancient tool...
+  </pre>
+  <p>Now enter the password and decrypt it here:</p>
+  <input id="aesPassword" placeholder="Enter password..." />
+  <button onclick="revealLink()">Decrypt</button>
+</div>
+
+<div id="finalOutput" class="hidden">
+  <p>🎉 Congratulations! You decrypted the secret:</p>
+  <p><a href="https://www.devglan.com/online-tools/text-encryption-decryption" target="_blank">https://www.devglan.com/online-tools/text-encryption-decryption</a></p>
+</div>
+
+<script>
+function rot13(str) {
+  return str.replace(/[a-zA-Z]/g, function(c){
+    return String.fromCharCode(
+      (c <= "Z" ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26
+    );
+  });
+}
+
+function checkROT13() {
+  const input = document.getElementById('rot13Input').value.trim();
+  const result = rot13(input);
+  if (result.toLowerCase().includes('secret') || input.toLowerCase().includes('guvf')) {
+    document.getElementById('rot13Output').classList.remove('hidden');
+  } else {
+    alert('Hmm... try decoding it with ROT13 first!');
+  }
+}
+
+function revealLink() {
+  const password = document.getElementById('aesPassword').value.trim();
+  if (password === 'thinkdeep') {
+    document.getElementById('finalOutput').classList.remove('hidden');
+  } else {
+    alert('Wrong password. Hint: the guardian’s whisper...');
+  }
+}
+</script>
+
+</body>
+</html>
